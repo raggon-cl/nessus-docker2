@@ -1,0 +1,61 @@
+# ============================================================
+#  docker-compose.yml — Nessus Containerizado
+#  INY1105 — Infraestructura de Aplicaciones I
+# ============================================================
+
+services:
+  nessus:
+    # Construye la imagen localmente desde el Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # Nombre descriptivo del contenedor
+    container_name: nessus-scanner
+
+    # Reinicio automático ante fallos (no reinicia si se detiene manualmente)
+    restart: unless-stopped
+
+    # Puerto 8834: interfaz web HTTPS de Nessus
+    # Acceso: https://localhost:8834
+    ports:
+      - "8834:8834"
+
+    # --------------------------------------------------------
+    # ESTRATEGIA DE PERSISTENCIA DUAL
+    # --------------------------------------------------------
+    volumes:
+      # --- Named Volume ---
+      # Persiste datos críticos: plugins, base de datos y configuración.
+      # Docker gestiona este volumen en /var/lib/docker/volumes/.
+      # Los datos sobreviven a "docker compose down".
+      - nessus_data:/opt/nessus
+
+      # --- Bind Mount ---
+      # Los logs de Nessus quedan accesibles directamente en ./logs/
+      # del host, sin necesidad de entrar al contenedor.
+      # Permite al SIEM consumirlos en tiempo real.
+      - ./logs:/opt/nessus/var/nessus/logs
+
+    environment:
+      - TZ=America/Santiago
+
+    # Límites de recursos para ambiente de laboratorio
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2G
+        reservations:
+          memory: 512M
+
+# ============================================================
+# Named Volume declarado a nivel raíz para que Docker Compose
+# lo gestione como recurso independiente del contenedor.
+# ============================================================
+volumes:
+  nessus_data:
+    driver: local
+    labels:
+      com.iny1105.description: "Datos persistentes de Nessus - plugins y base de datos"
+      com.iny1105.owner: "tu-nombre"

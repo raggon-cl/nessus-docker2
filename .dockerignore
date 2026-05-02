@@ -1,0 +1,23 @@
+# Control de versiones
+.git
+.gitignore
+
+# Logs locales (Bind Mount del host — no deben ir dentro de la imagen)
+logs/
+
+# Archivos de entorno con secretos
+.env
+*.env
+
+# Archivos del editor
+.vscode/
+*.swp
+*.swo
+
+# Documentación local (no forma parte de la imagen)
+README.md
+docs/
+
+# Artefactos temporales
+*.tmp
+*.log

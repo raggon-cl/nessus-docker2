@@ -1,0 +1,15 @@
+# Logs generados por el Bind Mount
+logs/
+
+# Variables de entorno con secretos
+.env
+*.env
+
+# Artefactos de Docker
+*.tar
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
