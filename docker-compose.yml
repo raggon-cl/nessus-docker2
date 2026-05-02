@@ -58,4 +58,4 @@ volumes:
     driver: local
     labels:
       com.iny1105.description: "Datos persistentes de Nessus - plugins y base de datos"
-      com.iny1105.owner: "tu-nombre"
+      com.iny1105.owner: "Rodrigo Aguilar"

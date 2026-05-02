@@ -9,7 +9,7 @@ FROM debian:bookworm-slim
 # ------------------------------------------------------------
 # Metadatos de la imagen (buena práctica OCI)
 # ------------------------------------------------------------
-LABEL maintainer="tu-usuario@correo.com"
+LABEL maintainer="r.aguilag@profesor.duoc.cl"
 LABEL version="1.0.0"
 LABEL description="Tenable Nessus containerizado para INY1105"
 
